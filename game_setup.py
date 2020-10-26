@@ -1,7 +1,5 @@
 import numpy as np
 import random
-import pandas as pd
-import matplotlib.pyplot as plt
 
 #from cards_setup import Card, Deck
 from board_setup import Square, Board
@@ -130,24 +128,3 @@ class Game(object):
 
         for player in self.players:
             self.play_turn(player)
-
-
-
-    def run_game(self, rounds):
-        while self.round_number <= rounds:
-            self.play_round()
-
-
-    def extract_results(self):
-        results = []
-        for square in self.board.squares:
-            result = [square.purchasable, square.type, square.sequence, square.name, square.visits_count]
-            results.append(result)
-
-        df = pd.DataFrame(results, columns=['purchasable', 'type','sequence', 'name', 'visits_count'])
-        df['share_of_visits'] = df['visits_count'] / df['visits_count'].sum()
-        self.results = df
-        self.grouped = df.groupby(['purchasable','type','sequence']).sum()
-        #self.filtered_results = self.grouped.filter(lambda x: x['purchasable'] == 1)
-        self.final_results = self.grouped.loc['purchasable' != True].sort_values(by='share_of_visits', ascending=False)
-        self.results_plot = self.final_results['share_of_visits'].plot(kind='bar')
