@@ -80,6 +80,7 @@ class Game(object):
 
 
     def play_turn(self, player):
+        doubles_count = 0
         rolls = player.roll_dice(2)
         result = np.sum(rolls)
         self.log.append(player.name + " rolled " + str(result))
@@ -90,8 +91,10 @@ class Game(object):
         self.log.append("Now turn: " + str(self.turn_number))
 
         if rolls[0] == rolls[1]:
+            doubles_count += 1
             self.log.append(player.name + " plays again becaus he had a double")
             self.play_turn(player)
+
 
 
 
