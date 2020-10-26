@@ -21,7 +21,6 @@ class Player(object):
 
     def roll_dice(self, n):
         rolls = []
-        result = 0
         for i in range(n):
             roll = np.random.randint(1,6)
             rolls.append(roll)
@@ -54,6 +53,11 @@ class Game(object):
         self.board = Board(squares_file_name)
         self.reset()
 
+    def set_order_of_play(self):
+        self.players.sort(key=lambda x: x.roll_dice(1), reverse=True)
+        self.log.append("Order of play was determined:")
+        [self.log.append(p.name) for p in self.players]
+
 
     def reset(self):
         self.log.clear()
@@ -64,6 +68,8 @@ class Game(object):
             player.current_position = 0
             player.cash = 2500
             self.log.append(player.name + " joined and is at " + str(player.current_position))
+
+        self.set_order_of_play()
 
         for deck in self.cards_decks:
             deck.shuffle()
