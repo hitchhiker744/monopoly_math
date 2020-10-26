@@ -56,7 +56,7 @@ class Deck(object):
         random.shuffle(self.cards)
 
 
-    def read_cards(self):
+    def load_cards(self):
         with open(self.file_name, encoding='utf-8-sig') as read_obj:
             csv_reader = reader(read_obj)
             for row in csv_reader:

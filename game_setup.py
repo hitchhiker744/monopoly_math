@@ -11,7 +11,7 @@ class Player(object):
         self.name = name
         self.current_position = 0
         self.squares_visited = []
-        self.move_order = 0
+        #self.move_order = 0
         self.cash = 0
 
     def move(self, steps):
@@ -31,6 +31,10 @@ class Player(object):
         card.play(self, game)
 
 
+    def pay_cash(self, to, amount):
+        pass
+
+
 class Jail_Cell(object):
     def __init__(self, player, release_date, index):
         self.prisoner = player
@@ -43,10 +47,10 @@ class Game(object):
         self.board = []
         self.log = []
         self.players = players
-        self.jail = []
         self.cards_decks = []
         self.turn_number = 0
         self.round_number = 0
+        self.doubles_counter = 0
         self.positions_visited = []
         self.setup_game(cards_files_list, squares_file_name)
 
@@ -55,7 +59,7 @@ class Game(object):
     def setup_game(self, cards_files_list, squares_file_name):
         for cards_file in cards_files_list:
             deck = Deck(cards_file)
-            deck.read_cards()
+            deck.load_cards()
             self.cards_decks.append(deck)
 
         self.board = Board(squares_file_name)
@@ -94,54 +98,54 @@ class Game(object):
             self.board.squares[i].deck = self.cards_decks[1]
 
 
-
-    def send_player_to_jail(self, player):
-        release_date = self.round_number + 3
-        player_index = self.players.index(player)
-
-        cell = Jail_Cell(player, release_date, player_index)
-        self.players.remove(player)
-        self.jail.append(cell)
-        self.log.append(player.name + " was jailed until round " + str(release_date))
-
-
-    def release_player_from_jail(self, player):
-        for cell in self.jail:
-            if cell.prisoner.name == player.name:
-                self.players.insert(cell.index, player)
-                self.jail.remove(cell)
-                self.log.append(player.name + " was released from jail")
-
     def check_prisoners_time_left(self):
-        for cell in self.jail:
+        for cell in self.board.jail:
             if cell.release_date == self.round_number:
-                self.release_player_from_jail(cell.prisoner)
+                self.board.release_player_from_jail(cell.prisoner)
 
-
-    def play_round(self):
-            pass
 
 
     def play_turn(self, player):
-        doubles_count = 0
+        self.turn_number += 1
+        self.log.append("Now turn: " + str(self.turn_number) + ". " + player.name + " is playing")
+
         rolls = player.roll_dice(2)
         result = np.sum(rolls)
+
         self.log.append(player.name + " rolled " + str(result))
+        if rolls[0] == rolls[1]:
+            self.log.append(player.name + " rolled a double!")
+            self.doubles_counter += 1
+            if self.doubles_counter == 3:
+                self.board.send_player_to_jail(player, self)
+                self.log.append(player.name + " rolled a 3rd double in a row and will be jailed!")
+                pass
+
+
         player.move(result)
         square = self.board.squares[player.current_position]
         square.play(self, player, self.turn_number)
-        self.turn_number += 1
-        self.log.append("Now turn: " + str(self.turn_number))
 
         if rolls[0] == rolls[1]:
-            doubles_count += 1
-            self.log.append(player.name + " plays again becaus he had a double")
+            self.log.append(player.name + " had a double and will roll again")
+            self.play_turn(player)
+        else:
+            self.doubles_counter = 0
+
+
+    def play_round(self):
+        self.round_number += 1
+        self.log.append("Starting round " + str(self.round_number))
+        self.check_prisoners_time_left()
+
+        for player in self.players:
             self.play_turn(player)
 
+
+
     def run_game(self, rounds):
-        while self.turn_number <= rounds*len(self.players):
-            for player in self.players:
-                self.play_turn(player)
+        while self.round_number <= rounds:
+            self.play_round()
 
 
     def extract_results(self):

@@ -37,6 +37,7 @@ class Board(object):
     def __init__(self, squares_file_name):
         self.file_name = squares_file_name
         self.squares = []
+        self.jail = []
         self.read_squares()
 
     def read_squares(self):
@@ -47,3 +48,27 @@ class Board(object):
                 purchasable = bool(int(row[1]))
                 square = Square(position, purchasable, row[2], row[3], row[4], row[5], row[6])
                 self.squares.append(square)
+
+    def move(self):
+        pass
+
+    def give_cash(self, player, amount):
+        pass
+
+    
+    def send_player_to_jail(self, player, game):
+        release_date = self.round_number + 3
+        player_index = self.players.index(player)
+
+        cell = Jail_Cell(player, release_date, player_index)
+        game.players.remove(player)
+        self.jail.append(cell)
+        game.log.append(player.name + " was jailed until round " + str(release_date))
+
+
+    def release_player_from_jail(self, player, game):
+        for cell in self.jail:
+            if cell.prisoner.name == player.name:
+                game.players.insert(cell.index, player)
+                self.jail.remove(cell)
+                game.log.append(player.name + " was released from jail")
