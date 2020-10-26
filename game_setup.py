@@ -31,14 +31,22 @@ class Player(object):
         card.play(self, game)
 
 
+class Jail_Cell(object):
+    def __init__(self, player, release_date, index):
+        self.prisoner = player
+        self.release_date = release_date
+        self.index = index
+
 
 class Game(object):
     def __init__(self, players, cards_files_list, squares_file_name):
         self.board = []
         self.log = []
         self.players = players
+        self.jail = []
         self.cards_decks = []
         self.turn_number = 0
+        self.round_number = 0
         self.positions_visited = []
         self.setup_game(cards_files_list, squares_file_name)
 
@@ -64,6 +72,7 @@ class Game(object):
         self.positions_visited.clear()
         self.log.append("New game starting")
         self.turn_number = 0
+        self.round_number = 0
         for player in self.players:
             player.current_position = 0
             player.cash = 2500
@@ -85,6 +94,34 @@ class Game(object):
             self.board.squares[i].deck = self.cards_decks[1]
 
 
+
+    def send_player_to_jail(self, player):
+        release_date = self.round_number + 3
+        player_index = self.players.index(player)
+
+        cell = Jail_Cell(player, release_date, player_index)
+        self.players.remove(player)
+        self.jail.append(cell)
+        self.log.append(player.name + " was jailed until round " + str(release_date))
+
+
+    def release_player_from_jail(self, player):
+        for cell in self.jail:
+            if cell.prisoner.name == player.name:
+                self.players.insert(cell.index, player)
+                self.jail.remove(cell)
+                self.log.append(player.name + " was released from jail")
+
+    def check_prisoners_time_left(self):
+        for cell in self.jail:
+            if cell.release_date == self.round_number:
+                self.release_player_from_jail(cell.prisoner)
+
+
+    def play_round(self):
+            pass
+
+
     def play_turn(self, player):
         doubles_count = 0
         rolls = player.roll_dice(2)
@@ -101,13 +138,11 @@ class Game(object):
             self.log.append(player.name + " plays again becaus he had a double")
             self.play_turn(player)
 
-
-
-
     def run_game(self, rounds):
         while self.turn_number <= rounds*len(self.players):
             for player in self.players:
                 self.play_turn(player)
+
 
     def extract_results(self):
         results = []
