@@ -1,5 +1,5 @@
 from csv import reader
-
+from cards_setup import Card, Deck
 
 class Square(object):
     def __init__(self, position, purchasable, square_type, sequence, name, action_type, action_value):
@@ -33,14 +33,25 @@ class Visit(object):
         self.player = player
 
 
+
+class Jail_Cell(object):
+    def __init__(self, player, release_date, index):
+        self.prisoner = player
+        self.release_date = release_date
+        self.index = index
+
+
+
 class Board(object):
-    def __init__(self, squares_file_name):
+    def __init__(self, cards_files_list, squares_file_name):
         self.file_name = squares_file_name
+        self.cards_files_list = cards_files_list
         self.squares = []
         self.jail = []
-        self.read_squares()
+        self.cards_decks = []
+        self.setup_board()
 
-    def read_squares(self):
+    def load_squares(self):
         with open(self.file_name, encoding='utf-8-sig') as read_obj:
             csv_reader = reader(read_obj)
             for row in csv_reader:
@@ -49,16 +60,28 @@ class Board(object):
                 square = Square(position, purchasable, row[2], row[3], row[4], row[5], row[6])
                 self.squares.append(square)
 
+    def prepare_cards_decks(self):
+        for cards_file in self.cards_files_list:
+            deck = Deck(cards_file)
+            deck.load_cards()
+            self.cards_decks.append(deck)
+
+
+    def setup_board(self):
+        self.load_squares()
+        self.prepare_cards_decks()
+
+
     def move(self):
         pass
 
     def give_cash(self, player, amount):
         pass
 
-    
+
     def send_player_to_jail(self, player, game):
-        release_date = self.round_number + 3
-        player_index = self.players.index(player)
+        release_date = game.round_number + 3
+        player_index = game.players.index(player)
 
         cell = Jail_Cell(player, release_date, player_index)
         game.players.remove(player)

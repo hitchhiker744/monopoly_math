@@ -3,7 +3,7 @@ import random
 import pandas as pd
 import matplotlib.pyplot as plt
 
-from cards_setup import Card, Deck
+#from cards_setup import Card, Deck
 from board_setup import Square, Board
 
 class Player(object):
@@ -35,19 +35,12 @@ class Player(object):
         pass
 
 
-class Jail_Cell(object):
-    def __init__(self, player, release_date, index):
-        self.prisoner = player
-        self.release_date = release_date
-        self.index = index
-
 
 class Game(object):
     def __init__(self, players, cards_files_list, squares_file_name):
         self.board = []
         self.log = []
         self.players = players
-        self.cards_decks = []
         self.turn_number = 0
         self.round_number = 0
         self.doubles_counter = 0
@@ -57,12 +50,9 @@ class Game(object):
 
 
     def setup_game(self, cards_files_list, squares_file_name):
-        for cards_file in cards_files_list:
-            deck = Deck(cards_file)
-            deck.load_cards()
-            self.cards_decks.append(deck)
 
-        self.board = Board(squares_file_name)
+
+        self.board = Board(cards_files_list, squares_file_name)
         self.reset()
 
     def set_order_of_play(self):
@@ -84,24 +74,24 @@ class Game(object):
 
         self.set_order_of_play()
 
-        for deck in self.cards_decks:
+        for deck in self.board.cards_decks:
             deck.shuffle()
             self.log.append(deck.file_name + " shuffled ")
 
         'set decks at positions'
         for i in (2,17,33):
             'community chest'
-            self.board.squares[i].deck = self.cards_decks[0]
+            self.board.squares[i].deck = self.board.cards_decks[0]
 
         for i in (7,22,36):
             'chance'
-            self.board.squares[i].deck = self.cards_decks[1]
+            self.board.squares[i].deck = self.board.cards_decks[1]
 
 
     def check_prisoners_time_left(self):
         for cell in self.board.jail:
             if cell.release_date == self.round_number:
-                self.board.release_player_from_jail(cell.prisoner)
+                self.board.release_player_from_jail(cell.prisoner, self)
 
 
 
@@ -119,7 +109,7 @@ class Game(object):
             if self.doubles_counter == 3:
                 self.board.send_player_to_jail(player, self)
                 self.log.append(player.name + " rolled a 3rd double in a row and will be jailed!")
-                pass
+                #Need to stope the loop here. Break doesnt work!
 
 
         player.move(result)
