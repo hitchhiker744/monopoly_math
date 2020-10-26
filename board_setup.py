@@ -85,6 +85,7 @@ class Board(object):
         player_index = game.players.index(player)
 
         cell = Jail_Cell(player, release_date, player_index)
+        self.squares[10].play(game, player, game.turn_number)
         game.players.remove(player)
         self.jail.append(cell)
         game.log.append(player.name + " was jailed until round " + str(release_date))
