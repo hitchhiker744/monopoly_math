@@ -2,7 +2,7 @@ from csv import reader
 from cards_setup import Card, Deck
 
 class Square(object):
-    def __init__(self, position, purchasable, square_type, sequence, name, action_type, action_value):
+    def __init__(self, position, purchasable, square_type, sequence, name, action_type, action_value, plot_color):
         self.position = position
         self.purchasable = purchasable
         self.type = square_type
@@ -10,6 +10,7 @@ class Square(object):
         self.name = name
         self.action_type = action_type
         self.action_value = action_value
+        self.plot_color = plot_color
         self.visits_count = 0
         self.visits = []
         self.deck = []
@@ -57,7 +58,7 @@ class Board(object):
             for row in csv_reader:
                 position = int(row[0])
                 purchasable = bool(int(row[1]))
-                square = Square(position, purchasable, row[2], row[3], row[4], row[5], row[6])
+                square = Square(position, purchasable, row[2], row[3], row[4], row[5], row[6], row[7])
                 self.squares.append(square)
 
     def prepare_cards_decks(self):
