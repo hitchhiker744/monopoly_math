@@ -20,7 +20,7 @@ class Player(object):
     def roll_dice(self, n):
         rolls = []
         for i in range(n):
-            roll = np.random.randint(1,6)
+            roll = np.random.randint(1,7)
             rolls.append(roll)
         return rolls
 
