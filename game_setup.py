@@ -105,7 +105,7 @@ class Game(object):
             self.log.append(player.name + " rolled a double!")
             self.doubles_counter += 1
             if self.doubles_counter == 3:
-                self.board.send_player_to_jail(player, self)
+                self.board.send_player_to_jail(player, self, reason="3 doubles")
                 self.log.append(player.name + " rolled a 3rd double in a row and will be jailed!")
                 #Need to stope the loop here. Break doesnt work!
 

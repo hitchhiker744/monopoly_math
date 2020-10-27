@@ -1,40 +1,41 @@
-﻿0,0,Go,Go,Go,finance,200,bisque
-1,1,Property,Purple,Purple1,none,,purple
-2,0,Card,Community Chest,Community Chest,draw_card,,cornsilk
-3,1,Property,Purple,Purple2,none,,purple
-4,0,Tax,City Tax,City tax,finance,-200,gray
-5,1,Train,Train,Train1,none,,teal
-6,1,Property,LightBlue,LightBlue1,none,,cornflowerblue
-7,0,Card,Chance,Chance,draw_card,,cornsilk
-8,1,Property,LightBlue,LightBlue2,none,,cornflowerblue
-9,1,Property,LightBlue,LightBlue3,none,,cornflowerblue
-10,0,Jail,Jail,Jail,none,,bisque
-11,1,Property,Pink,Pink1,none,,deeppink
-12,1,Utility,Utility,Utility1,none,,rosybrown
-13,1,Property,Pink,Pink2,none,,deeppink
-14,1,Property,Pink,Pink3,none,,deeppink
-15,1,Train,Train,Train2,none,,teal
-16,1,Property,Orange,Orange1,none,,orangered
-17,0,Card,Community Chest,Community Chest,draw_card,,cornsilk
-18,1,Property,Orange,Orange2,none,,orangered
-19,1,Property,Orange,Orange3,none,,orangered
-20,0,Free Parking,Free Parking,Free Parking,finance,,bisque
-21,1,Property,Red,Red1,none,,red
-22,0,Card,Chance,Chance,draw_card,,cornsilk
-23,1,Property,Red,Red2,none,,red
-24,1,Property,Red,Red3,none,,red
-25,1,Train,Train,Train3,none,,teal
-26,1,Property,Yellow,Yellow1,none,,yellow
-27,1,Property,Yellow,Yellow2,none,,yellow
-28,1,Utility,Utility,Utility2,none,,rosybrown
-29,1,Property,Yellow,Yellow3,none,,yellow
-30,0,Go to jail,Go to jail,Go to jail,move,10,bisque
-31,1,Property,Green,Green1,none,,lime
-32,1,Property,Green,Green2,none,,lime
-33,0,Card,Community Chest,Community Chest,draw_card,,cornsilk
-34,1,Property,Green,Green3,none,,lime
-35,1,Train,Train,Train4,none,,teal
-36,0,Card,Chance,Chance,draw_card,,cornsilk
-37,1,Property,DarkBlue,DarkBlue1,none,,blue
-38,0,Tax,Tax,Tax,finance,-200,gray
-39,1,Property,DarkBlue,DarkBlue2,none,,blue
+﻿index,purchasable,type,sequence,name,action_type,action_value,color,cost,house_cost,rent,rent_1h,rent_2h,rent_3h,rent_4h,rent_hotel,mortgage
+0,0,Go,Go,Go,finance,200,darkgray,,,,,,,,,
+1,1,Property,Purple,Purple1,none,,purple,60,50,2,10,30,90,160,250,30
+2,0,Card,Community Chest,Community Chest,draw_card,,dimgray,,,,,,,,,
+3,1,Property,Purple,Purple2,none,,purple,60,50,4,20,60,180,320,450,30
+4,0,Tax,City Tax,City tax,finance,-200,gray,,,,,,,,,
+5,1,Train,Train,Train1,none,,teal,200,,,,,,,,100
+6,1,Property,LightBlue,LightBlue1,none,,cornflowerblue,100,50,6,30,90,270,400,550,50
+7,0,Card,Chance,Chance,draw_card,,dimgray,,,,,,,,,
+8,1,Property,LightBlue,LightBlue2,none,,cornflowerblue,100,50,6,30,90,270,400,550,50
+9,1,Property,LightBlue,LightBlue3,none,,cornflowerblue,120,50,8,40,100,300,450,600,60
+10,0,Jail,Jail,Jail,none,,darkgray,,,,,,,,,
+11,1,Property,Pink,Pink1,none,,deeppink,140,100,10,50,150,450,625,750,70
+12,1,Utility,Utility,Utility1,none,,rosybrown,150,,,,,,,,75
+13,1,Property,Pink,Pink2,none,,deeppink,140,100,10,50,150,450,625,750,70
+14,1,Property,Pink,Pink3,none,,deeppink,160,100,12,60,180,500,700,900,80
+15,1,Train,Train,Train2,none,,teal,200,,,,,,,,100
+16,1,Property,Orange,Orange1,none,,orangered,180,100,14,70,200,550,750,950,90
+17,0,Card,Community Chest,Community Chest,draw_card,,dimgray,,,,,,,,,
+18,1,Property,Orange,Orange2,none,,orangered,180,100,14,70,200,550,750,950,90
+19,1,Property,Orange,Orange3,none,,orangered,200,100,16,80,220,600,800,1000,100
+20,0,Free Parking,Free Parking,Free Parking,finance,,darkgray,,,,,,,,,
+21,1,Property,Red,Red1,none,,red,220,150,18,90,250,700,875,1050,110
+22,0,Card,Chance,Chance,draw_card,,dimgray,,,,,,,,,
+23,1,Property,Red,Red2,none,,red,220,150,18,90,250,700,875,1050,110
+24,1,Property,Red,Red3,none,,red,240,150,20,100,300,750,925,1100,120
+25,1,Train,Train,Train3,none,,teal,200,,,,,,,,100
+26,1,Property,Yellow,Yellow1,none,,yellow,260,150,22,1120,330,800,975,1150,130
+27,1,Property,Yellow,Yellow2,none,,yellow,260,150,22,110,330,800,975,1150,130
+28,1,Utility,Utility,Utility2,none,,rosybrown,150,,,,,,,,75
+29,1,Property,Yellow,Yellow3,none,,yellow,280,150,24,120,360,850,1025,1200,140
+30,0,Go to jail,Go to jail,Go to jail,move,10,darkgray,,,,,,,,,
+31,1,Property,Green,Green1,none,,lime,300,150,26,130,390,900,1100,1275,150
+32,1,Property,Green,Green2,none,,lime,300,200,26,130,390,900,1100,1275,150
+33,0,Card,Community Chest,Community Chest,draw_card,,dimgray,,,,,,,,,
+34,1,Property,Green,Green3,none,,lime,320,200,28,150,450,1000,1200,1400,160
+35,1,Train,Train,Train4,none,,teal,200,,,,,,,,100
+36,0,Card,Chance,Chance,draw_card,,dimgray,,,,,,,,,
+37,1,Property,DarkBlue,DarkBlue1,none,,blue,350,200,35,175,500,1100,1300,1500,175
+38,0,Tax,Tax,Tax,finance,-200,gray,,,,,,,,,
+39,1,Property,DarkBlue,DarkBlue2,none,,blue,400,200,50,200,600,1400,1700,2000,200
