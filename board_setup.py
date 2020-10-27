@@ -6,6 +6,7 @@ class Square(object):
     def __init__(self, position, purchasable, square_type, sequence, name, action_type, action_value, plot_color):
         self.position = position
         self.purchasable = purchasable
+        self.owner = None
         self.type = square_type
         self.sequence = sequence
         self.name = name
